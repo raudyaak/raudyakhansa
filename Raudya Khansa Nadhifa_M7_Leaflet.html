@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Web Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="salatiga.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.css">
+    <script src="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.js"></script>
+
+    <style>
+        #map {
+            width: 100%;
+            min-height: 97vh;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        var map = L.map('map', {
+            center: [-7.334543425490294, 110.50147982420047],
+            zoom: 14
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var esri =
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            }).addTo(map);
+
+        var carto = L.tileLayer('https://cartodb-basemaps{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="http://cartodb.com/attributions">CartoDB</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        });
+
+        var baseMaps = { "Citra Satelit": esri, "Peta Carto": carto };
+
+        // Tambahkan MiniMap
+        var minimapLayer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            minZoom: 0, maxZoom: 13
+        });
+
+        var miniMap = new L.Control.MiniMap(minimapLayer, { toggleDisplay: true }).addTo(map);
+
+        // Ganti URL icon dengan yang valid
+        var customIcon = L.icon({
+            iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',  
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [0, -32]
+        });
+
+        // MARKER LOKASI
+        L.marker([-7.327151890620305, 110.50482461642137], { icon: customIcon })
+            .bindPopup('<b>Ronde Jago</b><br>Warung ronde legendaris di Salatiga yang terkenal dengan rasa khasnya.<br><img src="https://tourism.salatiga.go.id/storage/artikel/ronde-jago/foto_ronde-jago_01122023-012409.png" width="200px">')
+            .addTo(map);
+
+        L.marker([-7.330288294936292, 110.4997711815038], { icon: customIcon })
+            .bindPopup('<b>Alun Alun Pancasila</b><br>Alun-alun yang menjadi pusat keramaian dan tempat rekreasi warga.<br><img src="https://cnc-magazine.oramiland.com/parenting/images/2020-01-22.width-800.format-webp.webp" width="200px">')
+            .addTo(map);
+
+        L.marker([-7.327479022343036, 110.49766832967772], { icon: customIcon })
+            .bindPopup('<b>Stadion Kridanggo</b><br>Stadion olahraga utama di Salatiga, sering digunakan untuk berbagai acara olahraga dan konser besar.<br><img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Stadion_Kridanggo.jpg" width="200px">')
+            .addTo(map);
+
+        L.marker([-7.3268280294774994, 110.49547650172016], { icon: customIcon })
+            .bindPopup('<b>RSUD Kota Salatiga</b><br>Rumah sakit umum daerah yang memberikan layanan kesehatan utama bagi masyarakat Salatiga dan sekitarnya.<br><img src="https://static.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/p2/72/2023/12/10/IMG_20231210_204636-104922688.jpg" width="200px">')
+            .addTo(map);
+
+        L.marker([-7.360992265200849, 110.5139393885726], { icon: customIcon })
+            .bindPopup('<b>Terminal Tingkir</b><br>Terminal bus utama di Salatiga yang menghubungkan berbagai kota di Jawa Tengah dan sekitarnya.<br><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLtFJ6G9gE8A9K-cIOZ_Oqb9COg7o_Hfc5lg&s" width="200px">')
+            .addTo(map);
+
+        L.marker([-7.32363163742632, 110.50768584060029], { icon: customIcon })
+            .bindPopup('<b>Taman Kalitaman</b><br>Tempat rekreasi keluarga dengan kolam renang dan area bermain.<br><img src="https://tourism.salatiga.go.id/storage/artikel/kolam-renang-kalitaman/foto_kolam-renang-kalitaman_30112023-143235.png" width="200px">')
+            .addTo(map);
+
+        L.marker([-7.329845025454679, 110.50511542999139], { icon: customIcon })
+            .bindPopup('<b>Pasar Kota Salatiga</b><br>Pusat perdagangan tradisional yang menyediakan berbagai kebutuhan sehari-hari serta aneka kuliner khas Salatiga.<br><img src="https://kfmap.asia/storage/thumbs/storage/photos/ID.SLT.RT.PRY/ID.SLT.RT.PRY_1.jpg" width="200px">')
+            .addTo(map);
+
+        L.marker([-7.3448160727781255, 110.5070451945658], { icon: customIcon })
+            .bindPopup('<b>Hotel Kayu Arum</b><br>Hotel butik dengan nuansa klasik dan fasilitas eksklusif.<br><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9OlzWcyKwD2KM21rBOow2u_JPrzrobMXtPg&s" width="200px">')
+            .addTo(map);
+
+        L.marker([-7.354797745194521, 110.49662662914162], { icon: customIcon })
+            .bindPopup('<b>Prospero Ban Cafe</b><br>Kafe unik dengan konsep otomotif yang menarik bagi pecinta kendaraan.<br><img src="https://static.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/p1/364/2024/03/30/posprero-435324902.png" width="200px">')
+            .addTo(map);
+
+        L.marker([-7.344925152042546, 110.51935872465003], { icon: customIcon })
+            .bindPopup('<b>SMKN 3 Salatiga</b><br>Sekolah kejuruan ternama yang mencetak tenaga kerja terampil.<br><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb8R3WzCl5bK9UaHJt2kemxQjR14ENYTs5Mw&s" width="200px">')
+            .addTo(map);
+
+        // Pastikan salatiga.js sudah didefinisikan dengan benar
+        L.geoJSON(salatiga,{  
+            style: function(feature) {
+                switch (feature.properties.WADMKC) {
+                    case 'Argomulyo': return {color: "#ff9900"};
+                    case 'Banyubiru':  return {color: "red"};
+                    case 'Sidomukti':  return {color: "blue"};
+                    case 'Sidorejo':  return {color: "green"};
+                    case 'Suruh':  return {color: "magenta"};
+                    case 'Tengaran':  return {color: "yellow"};
+                    case 'Tingkir':  return {color: "grey"};
+                }
+            },
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(
+                    'Kecamatan adalah ' +
+                    '<strong>' +
+                    feature.properties.KECAMATAN +
+                    '</strong>'
+                );
+            }
+        }).addTo(map);
+    </script>
+</body>
+</html>
